@@ -1,0 +1,167 @@
+Table list_menu {
+  id integer [primary key, note: 'Auto increament']
+  name string
+  icon string
+  route_name string
+  link string
+  type string
+  status integer [note: '0 Inactive || 1 Actived']
+  is_parent integer [note: '0 No || 1 Yes']
+  id_parent integer [note: 'Reff self table']
+  is_delete integer [note: '0 No || 1 Yes']
+}
+
+Table roles {
+  id integer [primary key, note: 'Auto increament']
+  name string
+  level integer
+  description string
+  status integer [note: '0 Inactive || 1 Actived']
+  is_delete integer [note: '0 No || 1 Yes']
+}
+
+Table list_client {
+  id integer [primary key, note: 'Auto increament']
+  name string
+  biodata longtext [note: 'Nullable']
+  address text [note: 'Nullable']
+  status integer [note: 'Default 1/Active']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table configs {
+  id integer [primary key, note: 'Auto increament']
+  name string
+  label string
+  group string [note: 'Nullable']
+  value string
+  default string
+  type string [note: 'Nullable']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table client_configs {
+  id integer [primary key, note: 'Auto increament']
+  id_client unsignedBigInteger
+  id_config unsignedBigInteger
+  value string
+  status integer [note: 'Default 1/Active']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+Ref: configs.id < client_configs.id_config
+Ref: list_client.id < client_configs.id_client
+
+Table pendaftaran {
+  id integer [primary key, note: 'Auto increament']
+  id_pasien unsignedBigInteger
+  id_client unsignedBigInteger
+  id_user_input unsignedBigInteger
+  status integer [note: '0 Batal, 1 Menunggu, 2 Diperiksa, 3 Resep, 4 Ranap, 5 Selesai, 99 Booking']
+  is_lunas integer [note: '0 Belum, 1 Lunas, 2 Dicicil']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table kunjungan {
+  id integer [primary key, note: 'Auto increament']
+  id_pendaftaran unsignedBigInteger
+  id_nakes unsignedBigInteger
+  id_bed unsignedBigInteger
+  status integer [note: '0 Batal, 1 Masuk, 2 Mutasi Rajal, 3 Ranap, 4 Mutasi Ranap, 5 Keluar/Selesai']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table pembayaran {
+  id integer [primary key, note: 'Auto increament']
+  id_pendaftaran unsignedBigInteger
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table detail_pembayaran {
+  id integer [primary key, note: 'Auto increament']
+  id_pembayaran unsignedBigInteger
+  id_billing unsignedBigInteger
+  id_penjualan unsignedBigInteger
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table billing {
+  id integer [primary key, note: 'Auto increament']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table detail_billing {
+  id integer [primary key, note: 'Auto increament']
+  id_billing unsignedBigInteger
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table penjualan {
+  id integer [primary key, note: 'Auto increament']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table detail_penjualan {
+  id integer [primary key, note: 'Auto increament']
+  id_penjualan unsignedBigInteger
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table penjualan_resep {
+  id integer [primary key, note: 'Auto increament']
+  id_penjualan unsignedBigInteger
+  id_resep unsignedBigInteger
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table resep {
+  id integer [primary key, note: 'Auto increament']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table detail_resep {
+  id integer [primary key, note: 'Auto increament']
+  id_resep unsignedBigInteger
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
