@@ -1,0 +1,38 @@
+Table list_clients {
+  id integer [primary key, note: 'Auto increament']
+  biodata tinytext [note: 'Nullable']
+  address text [note: 'Nullable']
+  status integer [note: 'Default 1/Active']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table configs {
+  id integer [primary key, note: 'Auto increament']
+  name string
+  label string
+  group string [note: 'Nullable']
+  value string
+  default string
+  type string [note: 'Nullable']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+
+Table client_configs {
+  id integer [primary key, note: 'Auto increament']
+  id_client unsignedBigInteger
+  id_config unsignedBigInteger
+  value integer [note: 'Default 0/Inactive']
+  created_at timestamp
+  update_at timestamp
+  deleted_at timestamp
+  is_deleted integer [note: 'Default 0/Inactive']
+}
+Ref: configs.id < client_configs.id_config
+Ref: list_clients.id < client_configs.id_client
+
